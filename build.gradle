@@ -36,7 +36,7 @@ jar {
         attributes "Implementation-Title": "YoloSwagDefaultPlugin",
                 "Implementation-Version": "${version}",
                 "Entry-Point": "servlet.DefaultServletManager",
-                "Context-Root": "default"
+                "Context-Root": ""
     }
 }
 
