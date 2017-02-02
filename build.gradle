@@ -10,6 +10,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'jacoco'
 
 repositories {
+	jcenter()
     maven {
         url "https://maven.csse.rose-hulman.edu/artifactory/libs-release"
     }
@@ -21,6 +22,7 @@ dependencies {
 	compile(group: 'edu.rosehulman.csse477.YoloSwagProject', name: 'CSSE477Project', version: '1.2.4')
 	
 	testCompile 'junit:junit:4.+'
+	testCompile "org.mockito:mockito-core:1.+"
 }
 
 sourceCompatibility = 1.8
