@@ -12,20 +12,17 @@ public class DefaultServletManager extends AServletManager {
 
 	public DefaultServletManager(String filePath) {
 		super(filePath);
-		this.defaultServlet = new DefaultServlet(filePath);
 	}
 
 	@Override
 	public void init() {
-		// Nothing to do here
+		// Create default servlet
+		this.defaultServlet = new DefaultServlet(filePath);
 	}
 
 	@Override
 	public void destroy() {
-		for (AHttpServlet servlet : this.servletMap.values()) {
-			servlet.destroy();
-		}
-		
+		// Tear down default servlet
 		this.defaultServlet.destroy();
 	}
 	
