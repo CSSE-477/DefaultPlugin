@@ -21,7 +21,7 @@ staging-deploy:
     - gradle
     - java
   only:
-    - test-deployment
+    - master
 
 deploy:
   stage: deploy
