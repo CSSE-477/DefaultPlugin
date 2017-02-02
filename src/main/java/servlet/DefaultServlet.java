@@ -106,16 +106,17 @@ public class DefaultServlet extends AHttpServlet {
 				SwsLogger.errorLogger.error("POST to file " + testFile.getAbsolutePath() + ". Sending 500 Internal Server Error.");
 				responseBuilder.setStatus(500)
 						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
+				return;
 			}
 		} else if (testFile.isDirectory()) {
 			SwsLogger.errorLogger.error("POST to file " + testFile.getAbsolutePath() + ". Sending 400 Bad Request.");
 			responseBuilder.setStatus(400)
 					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(400)));
+			return;
 		}
 		FileWriter fw;
 		try {
 			fw = new FileWriter(testFile, true);
-			System.out.println(request.getHeader());
 			int amount = Integer
 					.parseInt(request.getHeader().get(Protocol.getProtocol().getStringRep(Keywords.CONTENT_LENGTH)));
 			fw.write(new String(request.getBody()), 0, amount);
@@ -124,6 +125,7 @@ public class DefaultServlet extends AHttpServlet {
 			SwsLogger.errorLogger.error("POST to file " + testFile.getAbsolutePath() + ". Sending 500 Internal Server Error.");
 			responseBuilder.setStatus(500)
 					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
+			return;
 		}
 		SwsLogger.accessLogger.info("POST to file " + testFile.getAbsolutePath() + ". Sending 200 OK.");
 		responseBuilder.setStatus(200)
@@ -140,6 +142,7 @@ public class DefaultServlet extends AHttpServlet {
 			SwsLogger.errorLogger.error("PUT to file " + testFile.getAbsolutePath() + ". Sending 400 Bad Request.");
 			responseBuilder.setStatus(400)
 					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(400)));
+			return;
 		}
 		if (!testFile.exists()) {
 			try {
@@ -148,6 +151,7 @@ public class DefaultServlet extends AHttpServlet {
 				SwsLogger.errorLogger.error("PUT to file " + testFile.getAbsolutePath() + ". Sending 500 Internal Server Error.");
 				responseBuilder.setStatus(500)
 						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
+				return;
 			}
 		}
 		FileWriter fw;
@@ -161,6 +165,7 @@ public class DefaultServlet extends AHttpServlet {
 			SwsLogger.errorLogger.error("PUT to file " + testFile.getAbsolutePath() + ". Sending 500 Internal Server Error.");
 			responseBuilder.setStatus(500)
 					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
+			return;
 		}
 		SwsLogger.accessLogger.info("PUT to file " + testFile.getAbsolutePath() + ". Sending 200 OK.");
 		responseBuilder.setStatus(200)
@@ -179,10 +184,11 @@ public class DefaultServlet extends AHttpServlet {
 			responseBuilder.setStatus(204)
 					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(204)))
 					.setFile(file);
-		}
-		SwsLogger.errorLogger.error("DELETE to file " + file.getAbsolutePath() + ". Sending 404 Not Found.");
-		responseBuilder.setStatus(404)
+		} else {
+			SwsLogger.errorLogger.error("DELETE to file " + file.getAbsolutePath() + ". Sending 404 Not Found.");
+			responseBuilder.setStatus(404)
 				.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(404)));
+		}
 	}
 
 	// Helper for doHead()

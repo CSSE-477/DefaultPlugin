@@ -25,20 +25,20 @@ public class DefaultServletManager extends AServletManager {
 		// Tear down default servlet
 		this.defaultServlet.destroy();
 	}
-	
+
 	@Override
 	public HttpResponse handleRequest(HttpRequest request) {
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
 
-		if (request.getMethod() == Protocol.getProtocol().getStringRep(Keywords.GET)) {
+		if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.GET))) {
 			this.defaultServlet.doGet(request, responseBuilder);
-		} else if (request.getMethod() == Protocol.getProtocol().getStringRep(Keywords.HEAD)) {
+		} else if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.HEAD))) {
 			this.defaultServlet.doHead(request, responseBuilder);
-		} else if (request.getMethod() == Protocol.getProtocol().getStringRep(Keywords.POST)) {
+		} else if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.POST))) {
 			this.defaultServlet.doPost(request, responseBuilder);
-		} else if (request.getMethod() == Protocol.getProtocol().getStringRep(Keywords.PUT)) {
+		} else if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.PUT))) {
 			this.defaultServlet.doPut(request, responseBuilder);
-		} else if (request.getMethod() == Protocol.getProtocol().getStringRep(Keywords.DELETE)) {
+		} else if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.DELETE))) {
 			this.defaultServlet.doDelete(request, responseBuilder);
 		}
 		
