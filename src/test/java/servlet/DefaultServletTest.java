@@ -22,19 +22,23 @@ public class DefaultServletTest {
 	private static String defaultFileName;
 	private static String directoryName;
 	private static String nestedFileName;
+	private static String newFileName;
+	private static final String defaultFileContent = "This is the initialization content in index.html!";
+	private static final String nestedFileContent = "This is the initialization content in test.txt!";
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		defaultFileName = "index.html";
 		directoryName = "directory";
 		nestedFileName = "test.txt";
+		newFileName = "new.txt";
 		rootDirectory = "src/test/resources";
 
 		// Initialize test file
 		File testFile = new File(rootDirectory, defaultFileName);
 
 		FileWriter writer = new FileWriter(testFile, false);
-		writer.write("This is the initialization content in index.html!");
+		writer.write(defaultFileContent);
 
 		writer.close();
 
@@ -45,7 +49,7 @@ public class DefaultServletTest {
 		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
 
 		FileWriter nestedWriter = new FileWriter(nestedFile, false);
-		nestedWriter.write("This is the initialization content in test.txt!");
+		nestedWriter.write(nestedFileContent);
 
 		nestedWriter.close();
 
@@ -68,7 +72,7 @@ public class DefaultServletTest {
 
 		int expected = 404;
 		int actual = response.getStatus();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -86,7 +90,7 @@ public class DefaultServletTest {
 
 		int expected = 404;
 		int actual = response.getStatus();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -104,7 +108,7 @@ public class DefaultServletTest {
 
 		int expected = 200;
 		int actual = response.getStatus();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 
 		String expectedBody = "This is the initialization content in index.html!";
 
@@ -161,7 +165,7 @@ public class DefaultServletTest {
 
 		int expected = 200;
 		int actual = response.getStatus();
-		assertEquals(actual, expected);
+		assertEquals(expected, actual);
 
 		String expectedBody = "This is the initialization content in index.html!";
 
@@ -173,9 +177,115 @@ public class DefaultServletTest {
 
 		assertEquals(expectedBody, actualBody);
 	}
+	
+	@Test
+	public void testHead404NotFound() {
+		HttpRequest request = Mockito.mock(HttpRequest.class);
+		when(request.getMethod()).thenReturn("HEAD");
+		when(request.getVersion()).thenReturn("HTTP/1.1");
+		when(request.getUri()).thenReturn("/notFound.txt");
+
+		HttpResponseBuilder rb = new HttpResponseBuilder();
+
+		defaultServlet.doHead(request, rb);
+
+		HttpResponse response = rb.generateResponse();
+
+		int expected = 404;
+		int actual = response.getStatus();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testHead404NotFoundIsDirectory() {
+		HttpRequest request = Mockito.mock(HttpRequest.class);
+		when(request.getMethod()).thenReturn("HEAD");
+		when(request.getVersion()).thenReturn("HTTP/1.1");
+		when(request.getUri()).thenReturn("/" + directoryName);
+
+		HttpResponseBuilder rb = new HttpResponseBuilder();
+
+		defaultServlet.doHead(request, rb);
+
+		HttpResponse response = rb.generateResponse();
+
+		int expected = 404;
+		int actual = response.getStatus();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testHead200OK() throws Exception {
+		HttpRequest request = Mockito.mock(HttpRequest.class);
+		when(request.getMethod()).thenReturn("HEAD");
+		when(request.getVersion()).thenReturn("HTTP/1.1");
+		when(request.getUri()).thenReturn("/" + defaultFileName);
+
+		HttpResponseBuilder rb = new HttpResponseBuilder();
+
+		defaultServlet.doHead(request, rb);
+
+		HttpResponse response = rb.generateResponse();
+
+		int expected = 200;
+		int actual = response.getStatus();
+		assertEquals(expected, actual);
+		
+		int expectedLength = defaultFileContent.length();
+		int actualLength = Integer.parseInt(response.getHeader().get("Content-Length"));
+		assertEquals(expectedLength, actualLength);
+	}
+	
+	@Test
+	public void testHead200OKNestedFile() throws Exception {
+		HttpRequest request = Mockito.mock(HttpRequest.class);
+		when(request.getMethod()).thenReturn("HEAD");
+		when(request.getVersion()).thenReturn("HTTP/1.1");
+		when(request.getUri()).thenReturn("/" + directoryName + "/" + nestedFileName);
+		
+		HttpResponseBuilder rb = new HttpResponseBuilder();
+
+		defaultServlet.doHead(request, rb);
+
+		HttpResponse response = rb.generateResponse();
+
+		int expected = 200;
+		int actual = response.getStatus();
+		assertEquals(expected, actual);
+		
+		int expectedLength = nestedFileContent.length();
+		int actualLength = Integer.parseInt(response.getHeader().get("Content-Length"));
+		assertEquals(expectedLength, actualLength);
+	}
+	
+	@Test
+	public void testHead200OKDefaultUri() throws Exception {
+		HttpRequest request = Mockito.mock(HttpRequest.class);
+		when(request.getMethod()).thenReturn("HEAD");
+		when(request.getVersion()).thenReturn("HTTP/1.1");
+		when(request.getUri()).thenReturn("/");
+
+		HttpResponseBuilder rb = new HttpResponseBuilder();
+
+		defaultServlet.doHead(request, rb);
+
+		HttpResponse response = rb.generateResponse();
+
+		int expected = 200;
+		int actual = response.getStatus();
+		assertEquals(expected, actual);
+		
+		int expectedLength = defaultFileContent.length();
+		int actualLength = Integer.parseInt(response.getHeader().get("Content-Length"));
+		assertEquals(expectedLength, actualLength);
+	}
 
 	@AfterClass
 	public static void tearDownAfterClass() {
 		// nothing to do here
+		File newFile = new File(newFileName);
+		if (newFile.exists()) {
+			newFile.delete();
+		}
 	}
 }
