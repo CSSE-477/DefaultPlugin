@@ -152,7 +152,7 @@ task publishToWebServer(dependsOn: jar) << {
 				throw new GradleException('/home/csse/YoloSwagSWS/bin/plugin does not exist. Cannot drop the plugin.')
 			}
 			
-			def result = execute('if test -d /tmp/DefaultPlugin; then echo "exists"; fi')						
+			result = execute('if test -d /tmp/DefaultPlugin; then echo "exists"; fi')						
 			if(result != "exists") {
 				println("Remote /tmp/DefaultPlugin does not exist, creating a new one...")
 				execute('mkdir -p /tmp/DefaultPlugin')
