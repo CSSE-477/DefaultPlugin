@@ -35,7 +35,8 @@ public class DefaultServlet extends AHttpServlet {
 		File file = new File(this.resourcePath.concat(uri));
 
 		if (!file.exists()) {
-			responseBuilder.setStatus(404);
+			responseBuilder.setStatus(404)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(404)));
 		} else if (file.isDirectory()) {
 			// check for default file before sending 404
 			String location = this.resourcePath.concat(uri).concat(System.getProperty("file.separator"))
@@ -43,13 +44,16 @@ public class DefaultServlet extends AHttpServlet {
 			file = new File(location);
 			if (file.exists()) {
 				responseBuilder.setStatus(200)
+						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(200)))
 						.putHeader(Protocol.getProtocol().getStringRep(Keywords.CONTENT_TYPE), "text/html")
 						.setFile(file);
 			} else {
-				responseBuilder.setStatus(404);
+				responseBuilder.setStatus(404)
+						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(404)));
 			}
 		} else {
 			responseBuilder.setStatus(200)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(200)))
 					.putHeader(Protocol.getProtocol().getStringRep(Keywords.CONTENT_TYPE), "text/html").setFile(file);
 		}
 	}
@@ -62,7 +66,8 @@ public class DefaultServlet extends AHttpServlet {
 		File file = new File(fullPath);
 
 		if (!file.exists()) {
-			responseBuilder.setStatus(404);
+			responseBuilder.setStatus(404)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(404)));
 		} else if (file.isDirectory()) {
 			// check for default file before sending 400
 			String location = fullPath.concat(System.getProperty("file.separator"))
@@ -74,7 +79,8 @@ public class DefaultServlet extends AHttpServlet {
 				getHeadResponseFromFile(file, responseBuilder);
 			} else {
 				SwsLogger.errorLogger.error("HEAD to file " + file.getAbsolutePath() + ". Sending 400 Bad Request");
-				responseBuilder.setStatus(400);
+				responseBuilder.setStatus(400)
+						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(400)));
 			}
 		} else {
 			// file exists; return last modified, file size, file type
@@ -92,10 +98,12 @@ public class DefaultServlet extends AHttpServlet {
 			try {
 				testFile.createNewFile();
 			} catch (IOException e) {
-				responseBuilder.setStatus(500);
+				responseBuilder.setStatus(500)
+						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
 			}
 		} else if (testFile.isDirectory()) {
-			responseBuilder.setStatus(400);
+			responseBuilder.setStatus(400)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(400)));
 		}
 		FileWriter fw;
 		try {
@@ -106,9 +114,12 @@ public class DefaultServlet extends AHttpServlet {
 			fw.write(new String(request.getBody()), 0, amount);
 			fw.close();
 		} catch (IOException e) {
-			responseBuilder.setStatus(500);
+			responseBuilder.setStatus(500)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
 		}
-		responseBuilder.setStatus(200).setFile(testFile);
+		responseBuilder.setStatus(200)
+				.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(200)))
+				.setFile(testFile);
 	}
 
 	@Override
@@ -117,13 +128,15 @@ public class DefaultServlet extends AHttpServlet {
 		String fullPath = this.resourcePath.concat(fileRequested);
 		File testFile = new File(fullPath);
 		if (testFile.isDirectory()) {
-			responseBuilder.setStatus(400);
+			responseBuilder.setStatus(400)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(400)));
 		}
 		if (!testFile.exists()) {
 			try {
 				testFile.createNewFile();
 			} catch (IOException e) {
-				responseBuilder.setStatus(500);
+				responseBuilder.setStatus(500)
+						.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
 			}
 		}
 		FileWriter fw;
@@ -134,9 +147,12 @@ public class DefaultServlet extends AHttpServlet {
 			fw.write(new String(request.getBody()), 0, amount);
 			fw.close();
 		} catch (IOException e) {
-			responseBuilder.setStatus(500);
+			responseBuilder.setStatus(500)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(500)));
 		}
-		responseBuilder.setStatus(200).setFile(testFile);
+		responseBuilder.setStatus(200)
+				.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(200)))
+				.setFile(testFile);
 	}
 
 	@Override
@@ -146,9 +162,12 @@ public class DefaultServlet extends AHttpServlet {
 		File file = new File(this.resourcePath + uri);
 		if (file.exists()) {
 			file.delete();
-			responseBuilder.setStatus(204).setFile(file);
+			responseBuilder.setStatus(204)
+					.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(204)))
+					.setFile(file);
 		}
-		responseBuilder.setStatus(404);
+		responseBuilder.setStatus(404)
+				.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(404)));
 	}
 
 	// Helper for doHead()
@@ -156,8 +175,10 @@ public class DefaultServlet extends AHttpServlet {
 		String lastModified = new Date(file.lastModified()).toString();
 		String fileSize = String.valueOf(file.length());
 		String fileType = FilenameUtils.getExtension(file.getAbsolutePath());
-		responseBuilder.setStatus(200).setFile(file).putHeader("lastModified", lastModified)
-				.putHeader("fileSize", fileSize).putHeader("fileType", fileType);
+		responseBuilder.setStatus(200)
+				.setPhrase(Protocol.getProtocol().getStringRep(Protocol.getProtocol().getCodeKeyword(200)))
+				.setFile(file).putHeader("lastModified", lastModified).putHeader("fileSize", fileSize)
+				.putHeader("fileType", fileType);
 	}
 
 }
