@@ -165,10 +165,13 @@ task publishToWebServer(dependsOn: jar) << {
 			executeSudo('mv /tmp/DefaultPlugin/*.jar /home/csse/YoloSwagSWS/bin/plugin', pty: true)
 			println("Successfully dropped jar into plugin directory!")
 
-			// TODO run curl test
 			println("Removing /tmp/DefaultPlugin")
 			execute('rm -rf /tmp/DefaultPlugin')
 			println("Successfully removed the /tmp/DefaultPlugin directory")
+			
+			println("Testing curl 200 response")
+			commandLine 'sh', './${projectDir}/e2e.sh'
+			println("YoloSwagDefaultPlugin has been deployed to " + System.getenv('SSH_HOST'))
 		}
 	}
 }
