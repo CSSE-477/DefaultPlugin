@@ -32,31 +32,19 @@ public class DefaultServletTest {
 
 		// Initialize test file
 		File testFile = new File(rootDirectory, defaultFileName);
-//		if (testFile.exists()) {
-//			testFile.delete();
-//		}
-//		testFile.createNewFile();
 
-		FileWriter writer = new FileWriter(testFile);
+		FileWriter writer = new FileWriter(testFile, false);
 		writer.write("This is the initialization content in index.html!");
 
 		writer.close();
 
 		// Initialize test directory
 		File testDirectory = new File(rootDirectory, directoryName);
-//		if (testDirectory.exists()) {
-//			testDirectory.delete();
-//		}
-//		testDirectory.mkdir();
 
 		// Initialize nested test file
 		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
-//		if (nestedFile.exists()) {
-//			nestedFile.delete();
-//		}
-//		nestedFile.createNewFile();
 
-		FileWriter nestedWriter = new FileWriter(nestedFile);
+		FileWriter nestedWriter = new FileWriter(nestedFile, false);
 		nestedWriter.write("This is the initialization content in test.txt!");
 
 		nestedWriter.close();
@@ -188,19 +176,6 @@ public class DefaultServletTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() {
-//		File testFile = new File(rootDirectory, defaultFileName);
-//		if (testFile.exists()) {
-//			testFile.delete();
-//		}
-//
-//		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
-//		if (nestedFile.exists()) {
-//			nestedFile.delete();
-//		}
-//
-//		File testDirectory = new File(rootDirectory, directoryName);
-//		if (testDirectory.exists()) {
-//			testDirectory.delete();
-//		}
+		// nothing to do here
 	}
 }
