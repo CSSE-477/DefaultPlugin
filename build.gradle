@@ -1,3 +1,7 @@
+plugins {
+	id 'org.hidetake.ssh' version '2.7.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -123,3 +127,28 @@ task codeCoverageInfo (dependsOn: jacocoTestReport) {
 	}
 }
 jacocoTestReport.finalizedBy(codeCoverageInfo)
+
+// SSH Publishing
+
+ssh.settings { knownHosts = allowAnyHosts }
+
+remotes {
+	deployment {
+		host = System.getenv('SSH_HOST')
+		user = System.getenv('SSH_USER')
+		password = System.getenv('SSH_PASSWORD')
+	}
+}
+
+task publishToWebServer(dependsOn: jar) << {
+	ssh.run {
+		session(remotes.deployment) {
+			println "Checking if remote /home/csse/YoloSwagSWS exists ..."
+			def result = execute('if test -d /homeddd/csse/YoloSwagSWS; then echo "exists"; fi')						
+			if(result != "exists") {
+				println("Remote /home/csse/YoloSwagSWS does not exist, build is failing...")
+				GradleException('/home/csse/YoloSwagSWS does not exist. Can't drop the plugin.')
+			}
+		}
+	}
+}
