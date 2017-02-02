@@ -146,11 +146,15 @@ task publishToWebServer(dependsOn: jar) << {
 	ssh.run {
 		session(remotes.deployment) {
 			println "Checking if remote /home/csse/YoloSwagSWS exists ..."
-			def result = execute('if test -d /homeddd/csse/YoloSwagSWS; then echo "exists"; fi')						
+			def result = execute('if test -d /home/csse/YoloSwagSWS; then echo "exists"; fi')						
 			if(result != "exists") {
 				println("Remote /home/csse/YoloSwagSWS does not exist, build is failing...")
 				throw new GradleException('/home/csse/YoloSwagSWS does not exist. Cant drop the plugin.')
 			}
+			
+			println("Putting jar into /home/csse/YoloSwagSWS/bin/plugin ...")
+			put from: "${buildDir}/libs/*.jar", into: '/home/csse/YoloSwagSWS/bin/plugin'
+			println("Successfully dropped jar into plugin directory!")
 		}
 	}
 }
