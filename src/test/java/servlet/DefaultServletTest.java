@@ -1,14 +1,11 @@
 package servlet;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,10 +32,10 @@ public class DefaultServletTest {
 
 		// Initialize test file
 		File testFile = new File(rootDirectory, defaultFileName);
-		if (testFile.exists()) {
-			testFile.delete();
-		}
-		testFile.createNewFile();
+//		if (testFile.exists()) {
+//			testFile.delete();
+//		}
+//		testFile.createNewFile();
 
 		FileWriter writer = new FileWriter(testFile);
 		writer.write("This is the initialization content in index.html!");
@@ -47,17 +44,17 @@ public class DefaultServletTest {
 
 		// Initialize test directory
 		File testDirectory = new File(rootDirectory, directoryName);
-		if (testDirectory.exists()) {
-			testDirectory.delete();
-		}
-		testDirectory.mkdir();
+//		if (testDirectory.exists()) {
+//			testDirectory.delete();
+//		}
+//		testDirectory.mkdir();
 
 		// Initialize nested test file
 		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
-		if (nestedFile.exists()) {
-			nestedFile.delete();
-		}
-		nestedFile.createNewFile();
+//		if (nestedFile.exists()) {
+//			nestedFile.delete();
+//		}
+//		nestedFile.createNewFile();
 
 		FileWriter nestedWriter = new FileWriter(nestedFile);
 		nestedWriter.write("This is the initialization content in test.txt!");
@@ -191,19 +188,19 @@ public class DefaultServletTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() {
-		File testFile = new File(rootDirectory, defaultFileName);
-		if (testFile.exists()) {
-			testFile.delete();
-		}
-
-		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
-		if (nestedFile.exists()) {
-			nestedFile.delete();
-		}
-
-		File testDirectory = new File(rootDirectory, directoryName);
-		if (testDirectory.exists()) {
-			testDirectory.delete();
-		}
+//		File testFile = new File(rootDirectory, defaultFileName);
+//		if (testFile.exists()) {
+//			testFile.delete();
+//		}
+//
+//		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
+//		if (nestedFile.exists()) {
+//			nestedFile.delete();
+//		}
+//
+//		File testDirectory = new File(rootDirectory, directoryName);
+//		if (testDirectory.exists()) {
+//			testDirectory.delete();
+//		}
 	}
 }
