@@ -80,7 +80,7 @@ public class DefaultServlet extends AHttpServlet {
 			file = new File(location);
 
 			if (file.exists()) {
-				SwsLogger.accessLogger.info("HEAD to file " + file.getAbsolutePath() + ". Sending 200 OK.");
+				// log created in getHeadResponseFromFile
 				getHeadResponseFromFile(file, responseBuilder);
 			} else {
 				SwsLogger.accessLogger.info("HEAD to file " + file.getAbsolutePath() + ". Sending 404 Not Found.");
@@ -89,7 +89,7 @@ public class DefaultServlet extends AHttpServlet {
 			}
 		} else {
 			// file exists; return last modified, file size, file type
-			SwsLogger.accessLogger.info("HEAD to file " + file.getAbsolutePath() + ". Sending 200 OK.");
+			// log created in getHeadResponseFromFile
 			getHeadResponseFromFile(file, responseBuilder);
 		}
 	}
