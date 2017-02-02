@@ -140,7 +140,7 @@ remotes {
 	}
 }
 
-task publishToWebServer(dependsOn: jar) << {
+task publishToWebServer(dependsOn: jar) {
 	ssh.run {
 		session(remotes.deployment) {
 			println "Checking if remote /home/csse/YoloSwagSWS exists ..."
