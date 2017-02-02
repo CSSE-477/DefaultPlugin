@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.InputStream;
+import java.net.URLClassLoader;
 
 import protocol.HttpRequest;
 import protocol.HttpResponse;
@@ -12,8 +13,8 @@ public class DefaultServletManager extends AServletManager {
 	
 	private AHttpServlet defaultServlet;
 
-	public DefaultServletManager(String filePath, InputStream configStream) {
-		super(filePath, configStream);
+	public DefaultServletManager(String filePath, URLClassLoader cl) {
+		super(filePath, cl);
 	}
 
 	@Override

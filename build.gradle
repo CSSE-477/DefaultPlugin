@@ -19,7 +19,7 @@ repositories {
 dependencies {
 	compile 'org.apache.logging.log4j:log4j-api:2.+'
 	compile 'org.apache.logging.log4j:log4j-core:2.+'
-	compile(group: 'edu.rosehulman.csse477.YoloSwagProject', name: 'CSSE477Project', version: '1.2.5')
+	compile(group: 'edu.rosehulman.csse477.YoloSwagProject', name: 'CSSE477Project', version: '1.2.6')
 	
 	testCompile 'junit:junit:4.+'
 	testCompile "org.mockito:mockito-core:1.+"
