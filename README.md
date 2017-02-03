@@ -1,4 +1,6 @@
 # Default Plugin for Team #YOLOSWAG *dabs*
+Jesse Shellabarger, Tayler How, Collin Trowbridge, Steve Trotta
+
 
 [![build status](https://ada.csse.rose-hulman.edu/CSSE477-YoloSwag/DefaultPlugin/badges/master/build.svg)](https://ada.csse.rose-hulman.edu/CSSE477-YoloSwag/DefaultPlugin/commits/master)
 [![coverage report](https://ada.csse.rose-hulman.edu/CSSE477-YoloSwag/DefaultPlugin/badges/master/coverage.svg)](https://ada.csse.rose-hulman.edu/CSSE477-YoloSwag/DefaultPlugin/commits/master)
