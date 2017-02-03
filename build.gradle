@@ -183,7 +183,7 @@ task publishToWebServer(dependsOn: jar) << {
 			sleep(3 * 1000)
 			println("Testing curl 200 response")
 			put from: "${projectDir}/src/main/resources/e2e.sh", into: '/tmp/DefaultPlugin'
-			executeSudo('/bin/bash /tmp/DefaultPlugin/e2e.sh', pty: true)
+			//executeSudo('/bin/bash /tmp/DefaultPlugin/e2e.sh', pty: true)
 			println("Success!")
 
 			println("Removing /tmp/DefaultPlugin")
