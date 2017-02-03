@@ -187,7 +187,7 @@ task publishToWebServer(dependsOn: jar) << {
 			println("Success!")
 
 			println("Removing /tmp/DefaultPlugin")
-			execute('rm -rf /tmp/DefaultPlugin')
+			//execute('rm -rf /tmp/DefaultPlugin')
 			println("Successfully removed the /tmp/DefaultPlugin directory")
 			println("YoloSwagDefaultPlugin has been deployed to " + System.getenv('SSH_HOST'))
 		}
