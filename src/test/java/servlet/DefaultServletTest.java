@@ -422,12 +422,12 @@ public class DefaultServletTest {
 	}
 
 	@Test
-	public void testPost200OkOverwriteFile() throws Exception {
+	public void testPut200OkOverwriteFile() throws Exception {
 		HttpRequest request = Mockito.mock(HttpRequest.class);
 		when(request.getMethod()).thenReturn("PUT");
 		when(request.getVersion()).thenReturn("HTTP/1.1");
 		when(request.getUri()).thenReturn("/" + defaultFileName);
-		String putContent = "POST Content";
+		String putContent = "PUT Content";
 		when(request.getBody()).thenReturn(putContent.toCharArray());
 		HashMap<String, String> fakeRequestHeaders = new HashMap<String, String>();
 		fakeRequestHeaders.put(Protocol.getProtocol().getStringRep(Keywords.CONTENT_LENGTH),
