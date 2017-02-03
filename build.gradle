@@ -154,8 +154,16 @@ task publishToWebServer(dependsOn: jar) << {
 			
 			result = execute('if test -f /home/csse/YoloSwagSWS/bin/plugin/DefaultServer*.jar; then echo "exists"; fi')						
 			if(result == "exists") {
+				println "Stopping server to add jar..."
+				executeSudo('service webserver stop', pty: true)
+				println "Server stopped"
+
 				println "Removing DefaultPlugin*.jar from /home/csse/YoloSwagSWS/bin/plugin ..."
 				executeSudo('rm /home/csse/YoloSwagSWS/bin/plugin/DefaultPlugin*.jar', pty: true)
+
+				println "Starting service..."
+				executeSudo('service webserver start', pty: true)
+				println "Service started"		
 			}
 
 			result = execute('if test -d /tmp/DefaultPlugin; then echo "exists"; fi')						
@@ -174,11 +182,11 @@ task publishToWebServer(dependsOn: jar) << {
 			sleep(3 * 1000)
 			println("Testing curl 200 response")
 			put from: "${projectDir}/src/main/resources/e2e.sh", into: '/tmp/DefaultPlugin'
-			//executeSudo('/bin/bash /tmp/DefaultPlugin/e2e.sh', pty: true)
+			executeSudo('/bin/bash /tmp/DefaultPlugin/e2e.sh', pty: true)
 			println("Success!")
 
 			println("Removing /tmp/DefaultPlugin")
-			//execute('rm -rf /tmp/DefaultPlugin')
+			execute('rm -rf /tmp/DefaultPlugin')
 			println("Successfully removed the /tmp/DefaultPlugin directory")
 			println("YoloSwagDefaultPlugin has been deployed to " + System.getenv('SSH_HOST'))
 		}
