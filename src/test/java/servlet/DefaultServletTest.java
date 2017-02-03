@@ -64,7 +64,7 @@ public class DefaultServletTest {
 	}
 	
 	@After
-	public void tearDownAfterEachTwst() throws Exception {
+	public void tearDownAfterEachTest() throws Exception {
 		// Delete new file
 		File newFile = new File(rootDirectory, newFileName);
 		if (newFile.exists()) {
