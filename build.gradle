@@ -152,8 +152,8 @@ task publishToWebServer(dependsOn: jar) << {
 				throw new GradleException('/home/csse/YoloSwagSWS/bin/plugin does not exist. Cannot drop the plugin.')
 			}
 			
-			result = execute('if test -f /home/csse/YoloSwagSWS/bin/plugin/DefaultServer*.jar; then echo "exists"; fi')						
-			if(result == "exists") {
+			result = execute('if test ! -f /home/csse/YoloSwagSWS/bin/plugin/DefaultServer*.jar; then echo "notFound"; fi')						
+			if(result != "notFound") {
 				println "Stopping server to add jar..."
 				executeSudo('service webserver stop', pty: true)
 				println "Server stopped"
