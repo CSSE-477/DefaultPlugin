@@ -163,7 +163,7 @@ public class HeadRequestTests {
 	}
 	
 	@Test
-	public void testGet200OkNestedFile() throws Exception {
+	public void testHead200OkNestedFile() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + directoryName + "/" + nestedFileName);
 		HttpRequest request = requestFactory.buildHeadRequest(url);
 		
@@ -179,7 +179,7 @@ public class HeadRequestTests {
 	}
 
 	@Test
-	public void testGet404NotFoundIsDirectory() throws Exception {
+	public void testHead404NotFoundIsDirectory() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + directoryName);
 		HttpRequest request = requestFactory.buildHeadRequest(url);
 
