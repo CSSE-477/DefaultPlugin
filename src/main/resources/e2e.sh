@@ -9,7 +9,7 @@ case "$status_code" in
 	  	 && service webserver stop \
 	  	 && rm /home/csse/YoloSwagSWS/bin/plugin/DefaultPlugin*.jar \
 	  	 && service webserver start \
-	  	 && echo 'rolled back to previous version'
+	  	 && echo 'removed the new plugin jar and restarted the service'
 	  	 exit 1
 	  	 ;;
 esac
