@@ -152,8 +152,11 @@ task publishToWebServer(dependsOn: jar) << {
 				throw new GradleException('/home/csse/YoloSwagSWS/bin/plugin does not exist. Cannot drop the plugin.')
 			}
 			
-			println "Removing DefaultPlugin*.jar from /home/csse/YoloSwagSWS/bin/plugin in case it exists..."
-			executeSudo('rm /home/csse/YoloSwagSWS/bin/plugin/DefaultPlugin*.jar', pty: true)
+			result = execute('if test -f /home/csse/YoloSwagSWS/bin/plugin/DefaultServer*.jar; then echo "exists"; fi')						
+			if(result == "exists") {
+				println "Removing DefaultPlugin*.jar from /home/csse/YoloSwagSWS/bin/plugin ..."
+				executeSudo('rm /home/csse/YoloSwagSWS/bin/plugin/DefaultPlugin*.jar', pty: true)
+			}
 
 			result = execute('if test -d /tmp/DefaultPlugin; then echo "exists"; fi')						
 			if(result != "exists") {
