@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>710</y>
+      <w>530</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>DefaultServlet
+--
+--
++DefaultServlet(String resourcePath): ctor
++init(): void
++destroy(): void
++doGet(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doHead(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doPost(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doPut(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doDelete(HttpRequest request, HttpResponseBuilder responseBuilder): void
+-getHeadResponseFromFile(File file, HttpResponseBuilder responseBuilder): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>710</y>
+      <w>470</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>DefaultServletManager
+--
+-defaultServlet: AHttpServlet
+--
++DefaultServletManager(String filePath, InputStream configStream): ctor
++init(): void
++destroy(): void
++handleRequest(HttpRequest request): HttpResponse
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>320</y>
+      <w>460</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>/AServletManager/
+--
+#invocationMap: HashMap&lt;String, Method&gt;
+#servletMap: HashMap&lt;String, AHttpServlet&gt;
+#filePath: String
+-validStatus: boolean
+#CONFIG_DELIMETER = ",": String
+#URI_DELIMETER = "/": String
+#classLoader: URLClassLoader
+--
++AServletManager(String filePath, URLClassLoader classLoader): ctor
++isValid(): boolean
++init(): void
++destroy(): void
++parseConfigFile(): boolean
++handleRequest(HttpRequest request): HttpResponse
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>320</y>
+      <w>500</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>/AHttpServlet/
+--
+#resourcePath: String
+--
++AHttpServlet(String resourcePath): ctor
++init(): void
++destroy(): void
++doGet(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doHead(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doPost(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doPut(HttpRequest request, HttpResponseBuilder responseBuilder): void
++doDelete(HttpRequest request, HttpResponseBuilder responseBuilder): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>970</x>
+      <y>520</y>
+      <w>30</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>590</y>
+      <w>30</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>410</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>110</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Team #YOLOSWAG *dabs*
+Web Server</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>190</y>
+      <w>30</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>540</x>
+      <y>210</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>AServletManager and AHttpServlet are
+abstract classes defined in the SWS
+project. They're exposed as part of the
+SWS API for plugin developers.
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
