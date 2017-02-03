@@ -32,7 +32,7 @@ import server.Server;
 import servlet.AServletManager;
 import servlet.DefaultServletManager;
 
-public class GetRequestTests {
+public class HeadRequestTests {
 	private static Server server;
 	private static int port;
 	private static String rootDirectory;
@@ -117,9 +117,9 @@ public class GetRequestTests {
 	}
 
 	@Test
-	public void testGet404NotFound() throws Exception {
+	public void testHead404NotFound() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/notFound.txt");
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = requestFactory.buildHeadRequest(url);
 
 		try {
 			request.execute();
@@ -131,72 +131,57 @@ public class GetRequestTests {
 	}
 
 	@Test
-	public void testGet200Ok() throws Exception {
+	public void testHead200Ok() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + defaultFileName);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = requestFactory.buildHeadRequest(url);
 		
 		HttpResponse response = request.execute();
 		int expected = 200;
 		int actual = response.getStatusCode();
 		assertEquals(expected, actual);
 		
-		String expectedBody = defaultFileContent;
+		int expectedLength = defaultFileContent.length();
+		int actualLength = Math.toIntExact(response.getHeaders().getContentLength());
 
-		InputStream is = response.getContent();
-		byte[] data = new byte[Math.toIntExact(response.getHeaders().getContentLength())];
-		is.read(data);
-		is.close();
-		String actualBody = new String(data, "UTF-8");
-
-		assertEquals(expectedBody, actualBody);
+		assertEquals(expectedLength, actualLength);
 	}
 
 	@Test
-	public void testGet200OkDefaultUri() throws Exception {
+	public void testHead200OkDefaultUri() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/");
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = requestFactory.buildHeadRequest(url);
 		
 		HttpResponse response = request.execute();
 		int expected = 200;
 		int actual = response.getStatusCode();
 		assertEquals(expected, actual);
 		
-		String expectedBody = defaultFileContent;
+		int expectedLength = defaultFileContent.length();
+		int actualLength = Math.toIntExact(response.getHeaders().getContentLength());
 
-		InputStream is = response.getContent();
-		byte[] data = new byte[Math.toIntExact(response.getHeaders().getContentLength())];
-		is.read(data);
-		is.close();
-		String actualBody = new String(data, "UTF-8");
-
-		assertEquals(expectedBody, actualBody);
+		assertEquals(expectedLength, actualLength);
 	}
 	
 	@Test
 	public void testGet200OkNestedFile() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + directoryName + "/" + nestedFileName);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = requestFactory.buildHeadRequest(url);
 		
 		HttpResponse response = request.execute();
 		int expected = 200;
 		int actual = response.getStatusCode();
 		assertEquals(expected, actual);
 		
-		String expectedBody = nestedFileContent;
+		int expectedLength = nestedFileContent.length();
+		int actualLength = Math.toIntExact(response.getHeaders().getContentLength());
 
-		InputStream is = response.getContent();
-		byte[] data = new byte[Math.toIntExact(response.getHeaders().getContentLength())];
-		is.read(data);
-		is.close();
-		String actualBody = new String(data, "UTF-8");
-
-		assertEquals(expectedBody, actualBody);
+		assertEquals(expectedLength, actualLength);
 	}
 
 	@Test
 	public void testGet404NotFoundIsDirectory() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + directoryName);
-		HttpRequest request = requestFactory.buildGetRequest(url);
+		HttpRequest request = requestFactory.buildHeadRequest(url);
 
 
 		try {
