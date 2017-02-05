@@ -13,7 +13,7 @@ public class DefaultServletManager extends AServletManager {
 	
 	private AHttpServlet defaultServlet;
 
-	public DefaultServletManager(String filePath, URLClassLoader cl) {
+	public DefaultServletManager(String filePath, ClassLoader cl) {
 		super(filePath, cl);
 	}
 
