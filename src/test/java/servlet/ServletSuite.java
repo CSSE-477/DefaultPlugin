@@ -1,10 +1,10 @@
+package servlet;
+
 import integration.*;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import servlet.DefaultServletTest;
-import servlet.ServletSuite;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,10 +16,9 @@ import java.io.IOException;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        IntegrationSuite.class,
-        ServletSuite.class
+        DefaultServletTest.class
 })
-public class MasterSuite {
+public class ServletSuite {
 
     @BeforeClass
     public static void setUp() throws IOException {
