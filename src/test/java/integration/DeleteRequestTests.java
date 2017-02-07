@@ -92,7 +92,19 @@ public class DeleteRequestTests {
 	@Before
 	public void setUpBeforeEachTest() throws Exception {
 		// Initialize test file
+        File testDirectory = new File(rootDirectory);
+        if(!testDirectory.exists()) {
+            testDirectory.mkdirs();
+        }
+        File innerDirectory = new File(rootDirectory, directoryName);
+        if(!innerDirectory.exists()) {
+            innerDirectory.mkdirs();
+        }
 		File testFile = new File(rootDirectory, defaultFileName);
+		if(testFile.exists()){
+		    testFile.delete();
+        }
+        testFile.createNewFile();
 
 		FileWriter writer = new FileWriter(testFile, false);
 		writer.write(defaultFileContent);
@@ -101,6 +113,10 @@ public class DeleteRequestTests {
 
 		// Initialize nested test file
 		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
+        if(testFile.exists()){
+            nestedFile.delete();
+        }
+        nestedFile.createNewFile();
 
 		FileWriter nestedWriter = new FileWriter(nestedFile, false);
 		nestedWriter.write(nestedFileContent);
