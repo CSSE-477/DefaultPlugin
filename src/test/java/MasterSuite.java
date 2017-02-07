@@ -34,10 +34,7 @@ public class MasterSuite {
         String newFileName = "new.txt";
         String rootDirectory = "src/test/resources";
         // Initialize test file
-        File testDirectory = new File(rootDirectory);
-        if(!testDirectory.exists()) {
-            testDirectory.mkdirs();
-        }
+        createResourceDir();
         File innerDirectory = new File(rootDirectory, directoryName);
         if(!innerDirectory.exists()) {
             innerDirectory.mkdirs();
@@ -68,6 +65,32 @@ public class MasterSuite {
 
     @AfterClass
     public static void tearDown() throws IOException {
+        reclaimResourceDirectory();
     }
 
-}
+    public static boolean createResourceDir(){
+        File dir = new File("src/test/resources");
+        if(dir.exists()){
+            reclaimResourceDirectory();
+        }
+        return dir.mkdirs();
+    }
+
+    public static boolean reclaimResourceDirectory()
+    {
+        File dir = new File("src/test/resources");
+        return reclaimHelper(dir);
+    }
+
+    private static boolean reclaimHelper(File dir) {
+        if (dir.isDirectory()) {
+            File[] children = dir.listFiles();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = reclaimHelper(children[i]);
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }}
