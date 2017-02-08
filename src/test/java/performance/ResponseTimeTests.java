@@ -48,7 +48,7 @@ public class ResponseTimeTests {
 	
 	private static HttpRequestFactory requestFactory;
 	
-	private static long totalExecutionTimes;
+	private static double totalExecutionTimes;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -126,7 +126,8 @@ public class ResponseTimeTests {
 			doGet();
 		}
 		
-		System.out.println("Average GET execution time: " + (totalExecutionTimes/1000) + " milliseconds.");
+		double averageExecutionTime = totalExecutionTimes/1000.0;
+		System.out.println("Average GET execution time: " + averageExecutionTime + " milliseconds.");
 	}
 
 
@@ -162,7 +163,7 @@ public class ResponseTimeTests {
 		long stop = System.currentTimeMillis();
 		
 		System.out.println("GET request execution time: " + (stop - start) + " milliseconds.");
-		totalExecutionTimes += (stop - start);
+		totalExecutionTimes += (double) (stop - start);
 	}
 	
 	@AfterClass
