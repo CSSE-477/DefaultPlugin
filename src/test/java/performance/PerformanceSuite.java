@@ -1,12 +1,10 @@
-import integration.*;
-import performance.PerformanceSuite;
+package performance;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import servlet.DefaultServletTest;
-import servlet.ServletSuite;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,11 +16,9 @@ import java.io.IOException;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-		PerformanceSuite.class,
-        IntegrationSuite.class,
-        ServletSuite.class
+	ResponseTimeTests.class
 })
-public class MasterSuite {
+public class PerformanceSuite {
 
     @BeforeClass
     public static void setUp() throws IOException {
