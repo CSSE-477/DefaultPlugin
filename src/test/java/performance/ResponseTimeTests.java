@@ -127,7 +127,7 @@ public class ResponseTimeTests {
 		}
 		
 		double averageExecutionTime = totalExecutionTimes/1000.0;
-		System.out.println("Average GET execution time: " + averageExecutionTime + " milliseconds.");
+		System.out.println("Average GET execution time: " + averageExecutionTime + " nanoseconds.");
 	}
 
 
@@ -156,13 +156,13 @@ public class ResponseTimeTests {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + defaultFileName);
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		
-		long start = System.currentTimeMillis();
+		long start = System.nanoTime();
 		
 		HttpResponse response = request.execute();
 		
-		long stop = System.currentTimeMillis();
+		long stop = System.nanoTime();
 		
-		System.out.println("GET request execution time: " + (stop - start) + " milliseconds.");
+		System.out.println("GET request execution time: " + (stop - start) + " nanoseconds.");
 		totalExecutionTimes += (double) (stop - start);
 	}
 	
