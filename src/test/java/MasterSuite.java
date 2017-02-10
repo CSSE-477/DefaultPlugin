@@ -1,16 +1,13 @@
-import integration.*;
-import performance.PerformanceSuite;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import servlet.DefaultServletTest;
-import servlet.ServletSuite;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import servlet.ServletSuite;
 
 /**
  * Created by TrottaSN on 1/19/2017.
