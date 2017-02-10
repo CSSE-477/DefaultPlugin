@@ -21,7 +21,7 @@ staging-deploy:
     - gradle
     - java
   only:
-    - pluginFailure
+    - master
 
 deploy:
   stage: deploy
