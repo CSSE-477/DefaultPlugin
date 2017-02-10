@@ -1,6 +1,7 @@
-package performance;
+package benchmarks;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -32,7 +33,7 @@ import server.Server;
 import servlet.AServletManager;
 import servlet.DefaultServletManager;
 
-public class ResponseTimeTests {
+public class ChecksumTests {
 	private static Server server;
 	private static int port;
 	private static String rootDirectory;
@@ -48,8 +49,6 @@ public class ResponseTimeTests {
 	
 	private static HttpRequestFactory requestFactory;
 	
-	private static double totalExecutionTimes;
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		defaultFileName = "index.html";
@@ -57,8 +56,6 @@ public class ResponseTimeTests {
 		nestedFileName = "test.txt";
 		newFileName = "new.txt";
 		rootDirectory = "src/test/resources";
-		
-		totalExecutionTimes = 0;
 		
 		// Mock URLClassLoader
 		URLClassLoader fakeClassLoader = Mockito.mock(URLClassLoader.class);
@@ -119,51 +116,51 @@ public class ResponseTimeTests {
 			newFile.delete();
 		}
 	}
-	
+
 	@Test
-	public void test() throws Exception {
-		for (int i = 0; i < 1000; i++) {
-			doGet();
-		}
-		
-		double averageExecutionTime = totalExecutionTimes/1000.0;
-		System.out.println("Average GET execution time: " + averageExecutionTime + " nanoseconds.");
-	}
-
-
-//	@Test
-//	public void testGet200Ok() throws Exception {
-//		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + defaultFileName);
-//		HttpRequest request = requestFactory.buildGetRequest(url);
-//		
-//		HttpResponse response = request.execute();
-//		int expected = 200;
-//		int actual = response.getStatusCode();
-//		assertEquals(expected, actual);
-//		
-//		String expectedBody = defaultFileContent;
-//
-//		InputStream is = response.getContent();
-//		byte[] data = new byte[Math.toIntExact(response.getHeaders().getContentLength())];
-//		is.read(data);
-//		is.close();
-//		String actualBody = new String(data, "UTF-8");
-//
-//		assertEquals(expectedBody, actualBody);
-//	}
-	
-	public void doGet() throws Exception {
+	public void testGet200OkWithChecksum() throws Exception {
 		GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + defaultFileName);
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		
-		long start = System.nanoTime();
-		
 		HttpResponse response = request.execute();
+		int expected = 200;
+		int actual = response.getStatusCode();
+		assertEquals(expected, actual);
 		
-		long stop = System.nanoTime();
+		String expectedBody = defaultFileContent;
+
+		InputStream is = response.getContent();
+		byte[] data = new byte[Math.toIntExact(response.getHeaders().getContentLength())];
+		is.read(data);
+		is.close();
+		String actualBody = new String(data, "UTF-8");
+
+		String received = response.getHeaders().get("checksum").toString();
+		String checksum = received.substring(1, received.length()-1);
 		
-		System.out.println("GET request execution time: " + (stop - start) + " nanoseconds.");
-		totalExecutionTimes += (double) (stop - start);
+		assertEquals("F9843BC4DF444B6B77BE2D6F22E6AC021EE1D89ED6E2FBCDDB59FC105B6825DC", checksum);
+
+		assertEquals(expectedBody, actualBody);
+	}
+	
+	@Test
+	public void testResponseTime() throws Exception{
+		
+		long total = 0L;
+		
+		for (int i=0; i < 1000; i++) {
+			GenericUrl url = new GenericUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + defaultFileName);
+			HttpRequest request = requestFactory.buildGetRequest(url);
+			
+			long startTime = System.currentTimeMillis();
+			HttpResponse response = request.execute();
+			long endTime = System.currentTimeMillis();
+			
+			total += endTime-startTime;
+		}
+		Double averageTime = total/1000.0;
+		System.err.println("Average response time over 1000 requests: " + averageTime);
+		assertTrue(true);
 	}
 	
 	@AfterClass
