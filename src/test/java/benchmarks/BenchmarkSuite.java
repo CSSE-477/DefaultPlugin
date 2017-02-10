@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ ChecksumTests.class, DosPreventionTests.class })
+@Suite.SuiteClasses({ ChecksumTests.class, DosPreventionTests.class, ResponseTimeTests.class,
+		PluginBorkingTests.class })
 public class BenchmarkSuite {
 
 	@BeforeClass

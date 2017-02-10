@@ -1,4 +1,4 @@
-package performance;
+package benchmarks;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
