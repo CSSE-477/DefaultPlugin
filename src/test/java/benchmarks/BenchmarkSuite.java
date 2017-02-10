@@ -1,19 +1,22 @@
 package benchmarks;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
 /**
  * Created by TrottaSN on 1/19/2017.
  */
+
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ DosPreventionTests.class })
+@Suite.SuiteClasses({ ChecksumTests.class, DosPreventionTests.class })
 public class BenchmarkSuite {
+
 	@BeforeClass
 	public static void setUp() throws IOException {
 		String defaultFileContent = "This is the initialization content in index.html!";
@@ -34,17 +37,22 @@ public class BenchmarkSuite {
 			testFile.delete();
 		}
 		testFile.createNewFile();
+
 		FileWriter writer = new FileWriter(testFile, false);
 		writer.write(defaultFileContent);
+
 		writer.close();
+
 		// Initialize nested test file
 		File nestedFile = new File(rootDirectory, directoryName + "/" + nestedFileName);
 		if (testFile.exists()) {
 			nestedFile.delete();
 		}
 		nestedFile.createNewFile();
+
 		FileWriter nestedWriter = new FileWriter(nestedFile, false);
 		nestedWriter.write(nestedFileContent);
+
 		nestedWriter.close();
 	}
 
