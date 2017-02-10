@@ -21,7 +21,7 @@ staging-deploy:
     - gradle
     - java
   only:
-    - Checksum
+    - master
 
 deploy:
   stage: deploy
