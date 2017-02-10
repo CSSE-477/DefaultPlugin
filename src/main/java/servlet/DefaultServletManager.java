@@ -8,6 +8,7 @@ import protocol.HttpResponse;
 import protocol.HttpResponseBuilder;
 import protocol.Keywords;
 import protocol.Protocol;
+import utils.SwsLogger;
 
 public class DefaultServletManager extends AServletManager {
 	
@@ -31,6 +32,21 @@ public class DefaultServletManager extends AServletManager {
 
 	@Override
 	public HttpResponse handleRequest(HttpRequest request) {
+		
+		if (request.getUri().contains("bork")) {
+        	// plugin-borking easter egg
+			enableBorkMode();
+        } else if (request.getUri().contains("plsfix")) {
+        	// plugin-unborking easter egg
+			disableBorkMode();
+        }
+		
+		if (this.borkMode) {
+			SwsLogger.errorLogger.error("BORK MODE enabled, borking request!");
+			String bork = null;
+			bork.indexOf("bork");
+		}
+		
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
 
 		if (request.getMethod().equals(Protocol.getProtocol().getStringRep(Keywords.GET))) {
@@ -49,5 +65,4 @@ public class DefaultServletManager extends AServletManager {
 		
 		return responseBuilder.generateResponse();
 	}
-
 }
